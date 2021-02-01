@@ -1,27 +1,25 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
+import MovieCard from './MovieCard'
 
-export default function MovieList(props) {
+export default function MovieList({movies}) {
   return (
     <div className="movie-list">
-      {props.movies.map(movie => (
-        <MovieDetails key={movie.id} movie={movie} />
+      {movies.map(movie => (
+        <MovieDetails key={movie.id} movie={movie}/>
       ))}
     </div>
   );
 }
 
-function MovieDetails(props) {
-  const { title, director, metascore } = props.movie;
+function MovieDetails({movie}) {
+  const history = useHistory()
+
+  const handleMovieClick = (id) => {
+    history.push(`/movies/${id}`)
+  }
 
   return (
-    <div className="movie-card">
-      <h2>{title}</h2>
-      <div className="movie-director">
-        Director: <em>{director}</em>
-      </div>
-      <div className="movie-metascore">
-        Metascore: <strong>{metascore}</strong>
-      </div>
-    </div>
+    <MovieCard movie={movie} handleMovieClick={handleMovieClick}/>
   );
 }
